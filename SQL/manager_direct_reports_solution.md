@@ -1,6 +1,6 @@
 # Manager and Direct Reports --- PySpark/SQL Problem
 
-## 📌 Problem
+## Problem
 
 Given an employee hierarchy table, write a PySpark query to list each
 manager along with the count of employees reporting to them (direct
@@ -8,7 +8,7 @@ reports only).
 
 ------------------------------------------------------------------------
 
-## 📊 Employee Table (Sample Data)
+##  Employee Table (Sample Data)
 
   emp_id   emp_name   manager_id
   -------- ---------- ------------
@@ -21,32 +21,29 @@ reports only).
 
 ------------------------------------------------------------------------
 
-## ✅ Your Solution (SQL)
+## My Solution (SQL)
 
 ``` sql
-WITH ct AS (
-    SELECT 
-        manager_id, 
-        COUNT(*) AS Number_of_employee
-    FROM employee_hierarchy
-    GROUP BY manager_id
+with ct as(
+select 
+manager_id, count(*) as Number_of_employee
+from employee_hierarchy
+group by manager_id
 ),
-ct1 AS (
-    SELECT emp_id, emp_name, manager_id 
-    FROM employee_hierarchy
+ct1 as(
+select emp_id, emp_name, manager_id from employee_hierarchy
 )
-SELECT 
-    ct.manager_id,
-    ct1.emp_name AS manager_name,
-    ct.Number_of_employee
-FROM ct1
-JOIN ct 
-    ON ct.manager_id = ct1.emp_id;
+select ct.manager_id,
+ct1.emp_name as manager_name,
+ct.Number_of_employee
+from ct1
+join ct on ct.manager_id=ct1.emp_id 
+;
 ```
 
 ------------------------------------------------------------------------
 
-## 🟦 Output
+## Output
 
   manager_id   manager_name   Number_of_employee
   ------------ -------------- --------------------
